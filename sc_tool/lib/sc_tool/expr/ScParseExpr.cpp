@@ -614,7 +614,7 @@ std::pair<SValue, std::vector<SValue> >
                 // Check pointed object
                 if (iival.isInteger()) {
                     // Have integer constant for pointer
-                    if (!iival.getInteger().isNullValue()) {
+                    if (!iival.getInteger().isZero()) {
                         ScDiag::reportScDiag(argExpr->getBeginLoc(),
                                              ScDiag::SYNTH_POINTER_NONZERO_INIT)
                                              << val.asString(false);

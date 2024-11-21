@@ -1258,7 +1258,7 @@ void VerilogModule::addProcessBody(ProcessView proc, VerilogProcCode code)
 
 static void serializeVerilogBool(llvm::raw_ostream &os, llvm::APSInt val)
 {
-    os << (val.isNullValue() ? '0' : '1');
+    os << (val.isZero() ? '0' : '1');
 }
 
 static void serializeVerilogInt(llvm::raw_ostream &os, llvm::APSInt val)

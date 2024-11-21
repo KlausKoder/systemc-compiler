@@ -2101,32 +2101,32 @@ SValue ScParseExprValue::getReducedVal(const string& fname, const SValue& rval)
         APSInt intVal = rval.getInteger();
 
         if (fname == "or_reduce") {
-            val = SValue(SValue::boolToAPSInt(!intVal.isNullValue()), 10);
+            val = SValue(SValue::boolToAPSInt(!intVal.isZero()), 10);
         } else 
         if (fname == "nor_reduce") {
-            val = SValue(SValue::boolToAPSInt(intVal.isNullValue()), 10);
+            val = SValue(SValue::boolToAPSInt(intVal.isZero()), 10);
         } else 
         if (fname == "and_reduce") {
-            val = SValue(SValue::boolToAPSInt(intVal.isAllOnesValue()), 10);
+            val = SValue(SValue::boolToAPSInt(intVal.isAllOnes()), 10);
         } else 
         if (fname == "nand_reduce") {
-            val = SValue(SValue::boolToAPSInt(!intVal.isAllOnesValue()), 10);
+            val = SValue(SValue::boolToAPSInt(!intVal.isAllOnes()), 10);
         } else 
         if (fname == "xor_reduce") {
-            if (intVal.isNullValue()) {
+            if (intVal.isZero()) {
                 val = SValue(SValue::boolToAPSInt(false), 10);
             } else 
-            if (intVal.isOneValue()) {
+            if (intVal.isOne()) {
                 val = SValue(SValue::boolToAPSInt(true), 10);
             } else {
                 // May be implemented
             }
         } else 
         if (fname == "xnor_reduce") {
-            if (intVal.isNullValue()) {
+            if (intVal.isZero()) {
                 val = SValue(SValue::boolToAPSInt(true), 10);
             } else 
-            if (intVal.isOneValue()) {
+            if (intVal.isOne()) {
                 val = SValue(SValue::boolToAPSInt(false), 10);
             } else {
                 // May be implemented
@@ -3413,7 +3413,7 @@ SValue ScParseExprValue::derefPointer(const SValue& rval, Stmt* stmt,
                                  ScDiag::CPP_DANGLING_PTR_DEREF) << 
                                  rvar.asString(rvar.isObject());
         } else 
-        if (valzero.isInteger() && valzero.getInteger().isNullValue()) {
+        if (valzero.isInteger() && valzero.getInteger().isZero()) {
             SValue rvar = state->getVariableForValue(rval);
             ScDiag::reportScDiag(stmt->getBeginLoc(), 
                                  ScDiag::CPP_NULL_PTR_DEREF) << 

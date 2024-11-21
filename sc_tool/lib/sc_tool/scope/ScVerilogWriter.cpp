@@ -732,7 +732,7 @@ std::string ScVerilogWriter::makeLiteralStr(APSInt val,
                                             CastSign castSign, 
                                             bool addNegBrackets)
 {
-    bool isZero = val.isNullValue();
+    bool isZero = val.isZero();
     bool isOne = val == 1;
     bool isNegative = val < 0;
     unsigned bitNeeded = getBitsNeeded(val);
@@ -2483,7 +2483,7 @@ void ScVerilogWriter::putPartSelectExpr(const Stmt* stmt,  const SValue& val,
                 ScDiag::reportScDiag(hindx->getBeginLoc(), 
                                      ScDiag::SC_RANGE_WRONG_INDEX);
             }
-            if (intrWidth == 1 && (!lval.isNullValue() || !hval.isNullValue())) {
+            if (intrWidth == 1 && (!lval.isZero() || !hval.isZero())) {
                 ScDiag::reportScDiag(base->getBeginLoc(), 
                                      ScDiag::SC_RANGE_WRONG_INDEX);
             }
@@ -2545,7 +2545,7 @@ void ScVerilogWriter::putBitSelectExpr(const Stmt* stmt, const SValue& val,
                 ScDiag::reportScDiag(index->getBeginLoc(), 
                                      ScDiag::SC_BIT_WRONG_INDEX);
             }
-            if (intrWidth == 1 && !lval.isNullValue()) {
+            if (intrWidth == 1 && !lval.isZero()) {
                 ScDiag::reportScDiag(base->getBeginLoc(), 
                                      ScDiag::SC_BIT_WRONG_INDEX);
             }

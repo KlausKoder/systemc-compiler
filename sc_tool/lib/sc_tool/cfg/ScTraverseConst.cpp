@@ -355,7 +355,7 @@ unsigned ScTraverseConst::parseWaitArg(clang::CallExpr* expr)
         if (wwval.isInteger()) {
             const APSInt& waitNVal = wwval.getInteger();
 
-            if (waitNVal.isNullValue() || waitNVal.isNegative()) {
+            if (waitNVal.isZero() || waitNVal.isNegative()) {
                 ScDiag::reportScDiag(expr->getBeginLoc(), 
                                      ScDiag::SC_WAIT_N_NONPOSITIVE);
                 return 1;
@@ -602,7 +602,7 @@ void ScTraverseConst::parseMemberCall(CXXMemberCallExpr* expr, SValue& tval,
         }
 
         // Check function is not pure
-        if (methodDecl->isPure()) {
+        if (methodDecl->isPureVirtual()) {
             ScDiag::reportScDiag(expr->getSourceRange().getBegin(), 
                                  ScDiag::CPP_PURE_FUNC_CALL) << fname;
             // Pure function call leads to SIGSEGV in cfg->dump(), 
@@ -1398,7 +1398,7 @@ void ScTraverseConst::run()
             if (aliveLoop) {
                 if (loopFirstIter) {
                     if (termCondValue.isInteger() && 
-                        termCondValue.getInteger().isNullValue()) {
+                        termCondValue.getInteger().isZero()) {
                         ScDiag::reportScDiag(term->getBeginLoc(),
                                              ScDiag::SYNTH_ALIVE_LOOP_NULL_COND);
                     }
@@ -1413,9 +1413,9 @@ void ScTraverseConst::run()
             aliveLoop = false;
             
             bool trueCond = termCondValue.isInteger() && 
-                             !termCondValue.getInteger().isNullValue();
+                             !termCondValue.getInteger().isZero();
             bool falseCond = termCondValue.isInteger() && 
-                             termCondValue.getInteger().isNullValue();
+                             termCondValue.getInteger().isZero();
 
             if (DebugOptions::isEnabled(DebugComponent::doConstTerm)) {
                 //state->print();

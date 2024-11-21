@@ -609,7 +609,7 @@ void adjustIntegers(llvm::APSInt val1, llvm::APSInt val2, llvm::APSInt &res1,
 
 unsigned getBitsNeeded(llvm::APSInt val) 
 {
-    if (val.isNullValue()) {
+    if (val.isZero()) {
         return 1;
     } else {
         if (val < 0) {
