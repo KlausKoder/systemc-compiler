@@ -600,7 +600,7 @@ void DesignDbGenerator::addModuleDynamicAllocs(TypedObject moduleTO,
             llvm::APInt arraySize(64, alloc.array_size);
             // Use no @SizeExpr, hope that works
             qualType = getAstCtx()->getConstantArrayType(
-                            qualType, arraySize, nullptr, ArrayType::Normal, 0);
+                            qualType, arraySize, nullptr, ArraySizeModifier::Normal, 0);
         }
 
         TypedObject dynTO{alloc.ptr, qualType};

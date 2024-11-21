@@ -226,7 +226,7 @@ public:
     struct ArrayObjectIterator {
         using value_type = TypedObject;
 
-        ArrayObjectIterator() = default;
+        ArrayObjectIterator() = delete;
         ArrayObjectIterator(const ArrayObject &ao, size_t idx);
 
         ArrayObjectIterator& operator++();    // prefix increment
