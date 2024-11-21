@@ -546,7 +546,7 @@ std::optional<std::pair<size_t, bool>> getIntTraits(clang::QualType type,
         
     }
     
-    return Optional<std::pair<size_t, bool> >();
+    return std::optional<std::pair<size_t, bool> >();
 }
 
 // Get width of any integer type wrapped into given @type, based on @getIntTraits
@@ -583,7 +583,7 @@ std::optional<size_t> getAnyTypeWidth(clang::QualType type, bool checkPointer,
     return std::nullopt;
 }
 
-Optional<size_t> getScUintBiguintBitVec(QualType type) 
+std::optional<size_t> getScUintBiguintBitVec(QualType type) 
 {
     if (type.isNull()) return std::nullopt;
     type = getPureType(type);
@@ -599,10 +599,10 @@ Optional<size_t> getScUintBiguintBitVec(QualType type)
             return (size_t)arg.getExtValue();
         }
     }
-    return Optional<size_t>();
+    return std::optional<size_t>();
 }
 
-Optional<size_t> getScIntBigint(QualType type) 
+std::optional<size_t> getScIntBigint(QualType type) 
 {
     if (type.isNull()) return std::nullopt;
     type = getPureType(type);
@@ -618,7 +618,7 @@ Optional<size_t> getScIntBigint(QualType type)
             return (size_t)arg.getExtValue();
         }
     }
-    return Optional<size_t>();
+    return std::optional<size_t>();
 }
 
 // Check type is @sc_signed which is base class for @sc_bigint but not template 

@@ -216,7 +216,7 @@ ptrdiff_t RecordObject::getOffsetToTop() const
     return (*vptr)[-2];
 }
 
-Optional<RecordObject::FieldObject>
+std::optional<RecordObject::FieldObject>
 RecordObject::findField(llvm::StringRef fieldName) const
 {
     for (auto field : fields()) {

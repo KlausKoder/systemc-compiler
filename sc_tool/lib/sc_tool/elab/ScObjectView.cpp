@@ -382,7 +382,7 @@ PortView ObjectView::getPortBound(PortView port) const
 
 std::optional<ObjectView> ObjectView::derefRecursively() const
 {
-    Optional<ObjectView> res = *this;
+    std::optional<ObjectView> res = *this;
 
     while (res && res->isPointerOrRef()) {
         res = res->primitive()->ptrOrRef()->getFirstNonPointerPointee();

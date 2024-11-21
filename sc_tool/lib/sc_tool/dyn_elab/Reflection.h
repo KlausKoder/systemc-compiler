@@ -17,7 +17,7 @@
 #include <clang/AST/DeclCXX.h>
 #include <llvm/ADT/Hashing.h>
 #include <llvm/ADT/APSInt.h>
-#include <optional.h>
+#include <optional>
 #include <type_traits>
 #include <unordered_map>
 
