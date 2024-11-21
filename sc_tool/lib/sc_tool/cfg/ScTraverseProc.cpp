@@ -493,7 +493,7 @@ void ScTraverseProc::parseMemberCall(CXXMemberCallExpr* expr, SValue& tval,
             }
 
             // Check function is not pure
-            if (methodDecl->isPure()) {
+            if (methodDecl->isPureVirtual()) {
                 ScDiag::reportScDiag(expr->getSourceRange().getBegin(), 
                                      ScDiag::CPP_PURE_FUNC_CALL) << fname;
                 // Pure function call leads to SIGSEGV in cfg->dump(), 

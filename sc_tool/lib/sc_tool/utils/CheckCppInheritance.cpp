@@ -83,7 +83,7 @@ pair<SValue, FunctionDecl*> getVirtualFunc(const SValue& tval,
     // Return exact class with method definition required to access channel in it. 
     if (dynMetDecl && dynMetDecl->getParent() == recordDecl) {
 
-        if (dynMetDecl->isPure()) {
+        if (dynMetDecl->isPureVirtual()) {
             cout << recordDecl->getQualifiedNameAsString() << endl;
             recordDecl->dumpColor();
             SCT_TOOL_ASSERT(false, "Pure virtual method");
