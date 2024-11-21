@@ -199,7 +199,7 @@ std::optional<unsigned> ScTraverseConst::evaluateConstExpr(Expr* expr)
     if (rval.isInteger()) {
         return rval.getInteger().getZExtValue(); 
     }
-    return llvm::None;
+    return std::nullopt;
 } 
 
 // Evaluate loop iteration number from conditional expression
@@ -222,7 +222,7 @@ std::optional<unsigned> ScTraverseConst::evaluateIterNumber(const Stmt* stmt)
             }
         }
     }
-    return llvm::None;
+    return std::nullopt;
 }
 
 // Store ternary statement condition for SVA property

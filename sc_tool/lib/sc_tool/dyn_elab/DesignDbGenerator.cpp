@@ -95,7 +95,7 @@ std::optional<TypedObject> ObjectMap::findTypedObj(const Object *eo) const
     if (iter != elab2RflMap.end()) {
         return iter->second;
     }
-    return llvm::None;
+    return std::nullopt;
 }
 
 
@@ -129,7 +129,7 @@ ObjectMap::resolvePointer(PtrOrRefObject ptrObj)
 {
 
     if (ptrObj.isNullPtr()) {
-        return llvm::None;
+        return std::nullopt;
     }
     
     // Dereference a pointer to get a possibly invalid 
@@ -149,7 +149,7 @@ ObjectMap::resolvePointer(PtrOrRefObject ptrObj)
     }
 
     if (typedObjsAtAddr.empty()) {
-        return llvm::None;
+        return std::nullopt;
     
     } else {
 
@@ -192,7 +192,7 @@ ObjectMap::resolvePointer(PtrOrRefObject ptrObj)
         }
     }
 
-    return llvm::None;
+    return std::nullopt;
 }
 
 
@@ -736,7 +736,7 @@ DesignDbGenerator::getAsPtrOrRefTO(const sc_elab::Object &eo) const
         }
     }
 
-    return llvm::None;
+    return std::nullopt;
 
 }
 

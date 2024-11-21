@@ -173,7 +173,7 @@ std::optional<uint32_t> ObjectView::getElementIndex() const
     if (isArrayElement())
         return obj->array_idx();
     else
-        return llvm::None;
+        return std::nullopt;
 }
 
 namespace {
@@ -497,7 +497,7 @@ std::optional<PrimitiveView> ObjectView::primitive() const
     if (isPrimitive())
         return PrimitiveView(*this);
 
-    return llvm::None;
+    return std::nullopt;
 }
 
 std::optional<RecordView> ObjectView::record() const
@@ -505,7 +505,7 @@ std::optional<RecordView> ObjectView::record() const
     if (isRecord())
         return RecordView(*this);
 
-    return llvm::None;
+    return std::nullopt;
 }
 
 std::optional<ModuleMIFView> ObjectView::moduleMIF() const
@@ -513,7 +513,7 @@ std::optional<ModuleMIFView> ObjectView::moduleMIF() const
     if (isModule() || isModularInterface())
         return ModuleMIFView(*this);
 
-    return llvm::None;
+    return std::nullopt;
 }
 
 std::optional<ArrayView> ObjectView::array() const
@@ -521,7 +521,7 @@ std::optional<ArrayView> ObjectView::array() const
     if (isArrayLike())
         return ArrayView(*this);
 
-    return llvm::None;
+    return std::nullopt;
 }
 
 std::optional<SignalView> ObjectView::signal() const
@@ -529,7 +529,7 @@ std::optional<SignalView> ObjectView::signal() const
     if (isSignal())
         return SignalView(*this);
 
-    return llvm::None;
+    return std::nullopt;
 }
 
 std::optional<std::string> ObjectView::string() const
@@ -540,7 +540,7 @@ std::optional<std::string> ObjectView::string() const
         }
     }
 
-    return llvm::None;
+    return std::nullopt;
 }
 
 std::string ObjectView::getDebugString() const
@@ -797,7 +797,7 @@ std::optional<ObjectView> ObjectView::getTopmostParentArray() const
         return parent.primitive()->ptrOrRef()->getTopmostParentArray();
     }
     
-    return llvm::None;
+    return std::nullopt;
 }
 
 // Return topmost array or pointer variable 
@@ -854,7 +854,7 @@ std::optional<ObjectView> ObjectView::getTopmostParentArrayOrPointer() const
         }
     }
 
-    return llvm::None;
+    return std::nullopt;
 }
 
 // ArrayView -------------------------------------------------------------------
@@ -901,7 +901,7 @@ std::optional<ObjectView> ArrayView::getFirstNonArrayEl() const
             if (auto pointee = ptr->getFirstNonPointerPointee()) {
                 el = *pointee;
             } else
-                return llvm::None;
+                return std::nullopt;
         }
     }
 
@@ -981,7 +981,7 @@ std::optional<ObjectView> RecordView::getField(const clang::FieldDecl *fieldDecl
             return fieldView;
     }
 
-    return llvm::None;
+    return std::nullopt;
 }
 
 std::optional<ObjectView> RecordView::getField(const std::string fieldName) const
@@ -991,7 +991,7 @@ std::optional<ObjectView> RecordView::getField(const std::string fieldName) cons
             return fieldView;
     }
 
-    return llvm::None;
+    return std::nullopt;
 }
 
 std::optional<ObjectView> RecordView::getBase(clang::QualType baseType) const
@@ -1001,7 +1001,7 @@ std::optional<ObjectView> RecordView::getBase(clang::QualType baseType) const
             return baseView;
     }
 
-    return llvm::None;
+    return std::nullopt;
 }
 
 
@@ -1159,7 +1159,7 @@ std::optional<ValueView> PrimitiveView::value() const
     if (isValue())
         return ValueView(*this);
 
-    return llvm::None;
+    return std::nullopt;
 }
 
 std::optional<PtrOrRefView> PrimitiveView::ptrOrRef() const
@@ -1167,7 +1167,7 @@ std::optional<PtrOrRefView> PrimitiveView::ptrOrRef() const
     if (isPointer() || isReference())
         return PtrOrRefView(*this);
 
-    return llvm::None;
+    return std::nullopt;
 }
 
 std::optional<PortView> PrimitiveView::port() const
@@ -1175,7 +1175,7 @@ std::optional<PortView> PrimitiveView::port() const
     if (isPort())
         return PortView(*this);
 
-    return llvm::None;
+    return std::nullopt;
 }
 
 std::optional<ProcessView> PrimitiveView::process() const
@@ -1183,7 +1183,7 @@ std::optional<ProcessView> PrimitiveView::process() const
     if (isProcess())
         return ProcessView(*this);
 
-    return llvm::None;
+    return std::nullopt;
 }
 
 //  ValueView -----------------------------------------------------------------
@@ -1208,7 +1208,7 @@ std::optional<int64_t> ValueView::int64Val() const
     if (getProtobufObj()->primitive().init_val().has_int64_value())
         return getProtobufObj()->primitive().init_val().int64_value();
 
-    return llvm::None;
+    return std::nullopt;
 }
 
 std::optional<uint64_t> ValueView::uint64Val() const
@@ -1216,7 +1216,7 @@ std::optional<uint64_t> ValueView::uint64Val() const
     if (getProtobufObj()->primitive().init_val().has_uint64_value())
         return getProtobufObj()->primitive().init_val().uint64_value();
 
-    return llvm::None;
+    return std::nullopt;
 }
 
 std::optional<double> ValueView::doubleVal() const
@@ -1224,7 +1224,7 @@ std::optional<double> ValueView::doubleVal() const
     if (getProtobufObj()->primitive().init_val().has_double_val())
         return getProtobufObj()->primitive().init_val().double_val();
 
-    return llvm::None;
+    return std::nullopt;
 }
 
 //  PtrOrRefView --------------------------------------------------------------
@@ -1255,7 +1255,7 @@ std::optional<ObjectView> PtrOrRefView::pointee() const
     if (getProtobufObj()->primitive().ptr_val().pointee_id().size() == 1)
         return getDatabase()->getObj(getProtobufObj()->primitive().ptr_val().pointee_id(0));
 
-    return llvm::None;
+    return std::nullopt;
 }
 
 std::optional<ObjectView> PtrOrRefView::pointeeOrArray() const
@@ -1265,7 +1265,7 @@ std::optional<ObjectView> PtrOrRefView::pointeeOrArray() const
     if (isBaseOffsetPtr()) {
 //        for (size_t i = 1; i < pointee_ids.size(); ++i) {
 //            if (pointee_ids[i] != 0)
-//                return llvm::None;
+//                return std::nullopt;
 //        }
         return getDatabase()->getObj(pointee_ids[0]);
         
@@ -1287,7 +1287,7 @@ std::optional<uint32_t> PtrOrRefView::getPointeeID() const
 {
     if (getProtobufObj()->primitive().ptr_val().pointee_id_size() > 0)
         return getProtobufObj()->primitive().ptr_val().pointee_id(0);
-    return llvm::None;
+    return std::nullopt;
 }
 
 std::optional<uint32_t> PtrOrRefView::getOffset() const
@@ -1297,7 +1297,7 @@ std::optional<uint32_t> PtrOrRefView::getOffset() const
     if (getProtobufObj()->primitive().ptr_val().pointee_id().size() == 2)
         return getProtobufObj()->primitive().ptr_val().pointee_id(1);
 
-    return llvm::None;
+    return std::nullopt;
 }
 
 std::optional<ObjectView> PtrOrRefView::getFirstNonPointerPointee() const {
@@ -1313,7 +1313,7 @@ std::optional<ObjectView> PtrOrRefView::getFirstNonPointerPointee() const {
         return pointeeObj;
     }
 
-    return llvm::None;
+    return std::nullopt;
 }
 
 //  PortView --------------------------------------------------------------
@@ -1375,7 +1375,7 @@ std::optional<ObjectView> PortView::pointee() const
     if (getProtobufObj()->primitive().ptr_val().pointee_id().size() == 1)
         return getDatabase()->getObj(getProtobufObj()->primitive().ptr_val().pointee_id(0));
 
-    return llvm::None;
+    return std::nullopt;
 }
 
 
@@ -1451,7 +1451,7 @@ static std::optional<RecordView> findBaseClassByType(RecordView recView,
         if (auto res = findBaseClassByType(baseClassView, baseType))
             return res;
 
-    return llvm::None;
+    return std::nullopt;
 }
 
 // Get host class and function declarations for given process name and 

@@ -688,7 +688,7 @@ std::pair<std::optional<uint64_t>, std::optional<int64_t>>
 ScVerilogWriter::getLiteralVal(const std::string& literStr)
 {
     std::pair<std::optional<uint64_t>, 
-              std::optional<int64_t>> res(llvm::None, llvm::None);
+              std::optional<int64_t>> res(std::nullopt, std::nullopt);
     
     APSInt val(literStr);
     // Do not call @getZExtValue/getExtValue() for value more than 64bits

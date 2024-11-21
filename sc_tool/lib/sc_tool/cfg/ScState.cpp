@@ -1011,7 +1011,7 @@ std::optional<sc_elab::ObjectView> ScState::getElabObject(const SValue &sval) co
     if (searchRes != staticState->sVal2ElabMap.end()) {
         return searchRes->second;
     }
-    return llvm::None;
+    return std::nullopt;
 }
 
 const unordered_map<SValue, string>& ScState::getExtrValNames() const {

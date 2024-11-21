@@ -346,7 +346,7 @@ inline std::optional<T> TypedObject::getAs() const
     if (isKindOf<T>())
         return T(*this);
 
-    return llvm::None;
+    return std::nullopt;
 }
 
 template<typename OS> OS &operator<<(OS &os, const TypedObject &obj)

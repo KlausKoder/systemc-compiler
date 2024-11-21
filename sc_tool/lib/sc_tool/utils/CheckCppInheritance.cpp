@@ -151,7 +151,7 @@ std::optional<QualType> getParentClass(const SValue& val)
         }    
     }
     
-    return llvm::None;
+    return std::nullopt;
 }
 
 

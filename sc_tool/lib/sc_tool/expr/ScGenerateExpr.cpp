@@ -255,7 +255,7 @@ ScGenerateExpr::getStringFromArg(Expr* argExpr) {
         return res;
     }
     
-    return llvm::None;
+    return std::nullopt;
 }
 
 // Parse and evaluate pointer/time expression as constant integer, operates
@@ -3775,7 +3775,7 @@ std::optional<string> ScGenerateExpr::parse(const Stmt* stmt)
     auto ncstmt = const_cast<Stmt*>(stmt);
     chooseExprMethod(ncstmt, val);
 
-    if (val.isScZeroWidth()) return llvm::None;
+    if (val.isScZeroWidth()) return std::nullopt;
     
     return codeWriter->getStmtString(ncstmt);
 }

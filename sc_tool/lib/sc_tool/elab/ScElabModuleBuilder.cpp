@@ -2163,7 +2163,7 @@ std::optional<std::string> ScElabModuleBuilder::getVerilogIntrinsic(
         }
     }
 
-    return llvm::None;
+    return std::nullopt;
 }
 
 // Get string value from const std::string and const char*
@@ -2181,7 +2181,7 @@ std::optional<std::string> ScElabModuleBuilder::getVerilogModName(
         }
     }
 
-    return llvm::None;
+    return std::nullopt;
 }
 
 
@@ -2232,7 +2232,7 @@ ScElabModuleBuilder::getSvaProperties(const RecordView& recView)
         SCT_INTERNAL_ERROR_NOLOC("Incorrect sct_property_method");
     }
 
-    return llvm::None;
+    return std::nullopt;
 }*/
 
 /// Get string value from const char[]
@@ -2260,7 +2260,7 @@ ScElabModuleBuilder::getSvaProperties(const RecordView& recView)
 //        }
 //    }
 //
-//    return llvm::None;
+//    return std::nullopt;
 //}
 
 /// Getting value from static constexpr char
@@ -2283,7 +2283,7 @@ ScElabModuleBuilder::getSvaProperties(const RecordView& recView)
 //        }
 //    }
 //
-//    return llvm::None;
+//    return std::nullopt;
 //}
 
 

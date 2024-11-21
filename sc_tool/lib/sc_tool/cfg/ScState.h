@@ -87,9 +87,9 @@ struct VerilogVarTraits
     
     VerilogVarTraits(VarKind kind, AccessPlace place,
                      bool isModuleScope, bool skipNextAssign, bool isConstVar,
-                     std::optional<std::string> curr = llvm::None,
-                     std::optional<std::string> next = llvm::None,
-                     std::optional<std::string> suffix = llvm::None) :
+                     std::optional<std::string> curr = std::nullopt,
+                     std::optional<std::string> next = std::nullopt,
+                     std::optional<std::string> suffix = std::nullopt) :
         kind(kind), place(place), isModuleScope(isModuleScope), 
         skipNextAssign(skipNextAssign), isConstVar(isConstVar),
         currName(curr), nextName(next), mifElemSuffix(suffix)

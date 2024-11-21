@@ -230,7 +230,7 @@ RecordObject::findField(llvm::StringRef fieldName) const
         }
     }
 
-    return llvm::None;
+    return std::nullopt;
 }
 
 std::optional<RecordObject::BaseClassObject>
@@ -248,7 +248,7 @@ RecordObject::findBase(llvm::StringRef baseName) const {
         }
     }
 
-    return llvm::None;
+    return std::nullopt;
 }
 
 
@@ -420,7 +420,7 @@ ArrayObject::getArrayObjectKind(clang::QualType canonicalType)
             return ArrayObject::STD_ARRAY;
     }
 
-    return llvm::None;
+    return std::nullopt;
 }
 
 ArrayObject::ArrayObject(sc_elab::TypedObject typedObj)

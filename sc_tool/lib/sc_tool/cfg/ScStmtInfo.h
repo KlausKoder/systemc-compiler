@@ -71,7 +71,7 @@ public:
         if (i != levels.end()) {
             return i->second;
         }
-        return llvm::None;
+        return std::nullopt;
     }
     
     /// Check if statement has level, means it is not sub-statement
@@ -88,7 +88,7 @@ public:
         if (auto ss = ssVisitor.getSuperStmt(stmt)) {
             return getLevel(ss);
         }
-        return llvm::None;
+        return std::nullopt;
     } 
     
     /// Get statement for which given one is sub-statement or @nullptr
@@ -106,7 +106,7 @@ public:
                 return getLevel(i->second);
             }
         }
-        return llvm::None;
+        return std::nullopt;
     } 
     
     /// Check if loop has function call in condition

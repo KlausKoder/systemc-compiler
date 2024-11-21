@@ -510,7 +510,7 @@ clang::QualType getTypeForWidth(const clang::Expr* expr)
 std::optional<std::pair<size_t, bool>> getIntTraits(clang::QualType type, 
                                                      bool checkPointer)
 {
-    if (type.isNull()) return llvm::None;
+    if (type.isNull()) return std::nullopt;
     
     // Get the most inner array element type
     if (checkPointer) {
@@ -554,7 +554,7 @@ std::optional<std::pair<size_t, bool>> getIntTraits(clang::QualType type,
 std::optional<size_t> getAnyTypeWidth(clang::QualType type, bool checkPointer, 
                                        bool checkChannel)
 {
-    if (type.isNull()) return llvm::None;
+    if (type.isNull()) return std::nullopt;
     
     // Get array element type
     type = getArrayElementType(type);
@@ -580,12 +580,12 @@ std::optional<size_t> getAnyTypeWidth(clang::QualType type, bool checkPointer,
         return typeInfo->first;
     }
     
-    return llvm::None;
+    return std::nullopt;
 }
 
 Optional<size_t> getScUintBiguintBitVec(QualType type) 
 {
-    if (type.isNull()) return llvm::None;
+    if (type.isNull()) return std::nullopt;
     type = getPureType(type);
 
     if (isScUInt(type) || isScBigUInt(type) || isScBitVector(type)) {
@@ -604,7 +604,7 @@ Optional<size_t> getScUintBiguintBitVec(QualType type)
 
 Optional<size_t> getScIntBigint(QualType type) 
 {
-    if (type.isNull()) return llvm::None;
+    if (type.isNull()) return std::nullopt;
     type = getPureType(type);
 
     if (isScInt(type) || isScBigInt(type)) {
@@ -892,7 +892,7 @@ bool isScChannelArray(clang::QualType type, bool checkPointer)
 std::optional<clang::QualType>  
 isUserClassChannel(clang::QualType type, bool checkPointer)
 {
-    if (type.isNull()) return llvm::None;
+    if (type.isNull()) return std::nullopt;
     
     // Remove pointer
     if (checkPointer) {
@@ -909,7 +909,7 @@ isUserClassChannel(clang::QualType type, bool checkPointer)
             return *chanType;
         }
     }
-    return llvm::None;
+    return std::nullopt;
 }
 
 

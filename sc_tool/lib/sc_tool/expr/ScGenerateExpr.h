@@ -286,7 +286,7 @@ protected:
     std::string refRecarrIndx = "";
 
     /// Name for temporal assertion    
-    std::optional<std::string> assertName = llvm::None;
+    std::optional<std::string> assertName = std::nullopt;
     
     /// Function calls replaced by constant
     std::unordered_map<clang::Stmt*, clang::Stmt*> constReplacedFunc;

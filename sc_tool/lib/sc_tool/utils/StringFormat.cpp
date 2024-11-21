@@ -220,7 +220,7 @@ std::string parseSvaTime(int lotime, int hitime, unsigned stable)
     size_t ssize = str.size();
     while (i != ssize && isdigit(str[i])) i++;
     if (i == 0) {
-        return llvm::None;
+        return std::nullopt;
     }
     unsigned lotime = atoi( str.substr(0, i).c_str() );
 
@@ -229,7 +229,7 @@ std::string parseSvaTime(int lotime, int hitime, unsigned stable)
     if (i != ssize && str[i] == ':') {
         // If ":" is last symbol return nothing
         if (i == ssize-1) {
-            return llvm::None;
+            return std::nullopt;
         }
         
         i++; 
@@ -237,7 +237,7 @@ std::string parseSvaTime(int lotime, int hitime, unsigned stable)
         while (i != ssize && isdigit(str[i])) i++;
         // If no digits found return nothing
         if (i == tstart) {
-            return llvm::None;
+            return std::nullopt;
         }
         hitime = atoi( str.substr(tstart, i-tstart).c_str() );
 
@@ -248,7 +248,7 @@ std::string parseSvaTime(int lotime, int hitime, unsigned stable)
     
     // Check there is no other symbols in time string
     if (i != ssize) {
-        return llvm::None;
+        return std::nullopt;
     }
     
     std::string time;

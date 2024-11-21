@@ -796,7 +796,7 @@ VerilogModStatistic VerilogModule::getStatistic() const {
     
     if (!timeStr) {
         ScDiag::reportScDiag(ScDiag::SYNTH_SVA_INCORRECT_TIME) << timeTail;
-        return llvm::None;
+        return std::nullopt;
     }
     
     // Check variable names not changed during name conflict
@@ -808,7 +808,7 @@ VerilogModStatistic VerilogModule::getStatistic() const {
         //cout << "svaStr " << svaStr << endl;
         return svaStr;
     }
-    return llvm::None;
+    return std::nullopt;
 }*/
 
 // Check SVA argument does not have changed names, and do some modifications:
@@ -838,7 +838,7 @@ std::optional<std::string> VerilogModule::parseSvaArg(
                     std::string errMsg = "Changed variable name in \"" + 
                                          origStr + "\"";
                     SCT_INTERNAL_ERROR_NOLOC (errMsg);
-                    return llvm::None;
+                    return std::nullopt;
                 }
                 name.clear();
             }
@@ -847,7 +847,7 @@ std::optional<std::string> VerilogModule::parseSvaArg(
     if (nameGen.isChanged(name)) {
         std::string errMsg = "Changed variable name in \"" + origStr + "\"";
         SCT_INTERNAL_ERROR_NOLOC (errMsg);
-        return llvm::None;
+        return std::nullopt;
     }
     
     // Removing extra symbols
@@ -861,7 +861,7 @@ std::optional<std::string> VerilogModule::parseSvaArg(
     if (checkArrayAccessStr(str)) {
         std::string errMsg = "Array access in \"" + origStr + "\"";
         SCT_INTERNAL_ERROR_NOLOC (errMsg);
-        return llvm::None;
+        return std::nullopt;
     }
     
     // Check for @bit() and @range()
@@ -886,7 +886,7 @@ std::optional<std::string> VerilogModule::parseSvaArg(
         str.find(".") != std::string::npos) {
         std::string errMsg = "Unsupported symbol in \"" + origStr + "\"";
         SCT_INTERNAL_ERROR_NOLOC (errMsg);
-        return llvm::None;
+        return std::nullopt;
     }
     
     // Check de-reference in first symbol
@@ -895,7 +895,7 @@ std::optional<std::string> VerilogModule::parseSvaArg(
     if (str[i] == '*') {
         std::string errMsg = "De-reference in \"" + origStr + "\"";
         SCT_INTERNAL_ERROR_NOLOC (errMsg);
-        return llvm::None;
+        return std::nullopt;
     }
     
     return str;

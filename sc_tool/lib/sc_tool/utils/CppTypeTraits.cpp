@@ -392,14 +392,14 @@ bool isUserDefinedClassArray(QualType type, bool checkPointer)
 // Get user defined class from array/vector or none
 std::optional<QualType> getUserDefinedClassFromArray(QualType type) 
 {
-    if (type.isNull()) return llvm::None;
+    if (type.isNull()) return std::nullopt;
 
     type = getArrayElementType(type);
 
     if (isUserClass(type)) { 
         return type;
     } else {
-        return llvm::None;
+        return std::nullopt;
     }
 }
 
@@ -428,7 +428,7 @@ unsigned getTemplateArgNum(clang::QualType type)
 std::optional<TemplateArgument> getTemplateArg(clang::QualType type, 
                                                 std::size_t argIndx)
 {
-    if (type.isNull()) return llvm::None;
+    if (type.isNull()) return std::nullopt;
     
     type = getPureType(type);
 
@@ -451,7 +451,7 @@ std::optional<TemplateArgument> getTemplateArg(clang::QualType type,
 std::optional<clang::QualType> getTemplateArgAsType(clang::QualType type, 
                                                      std::size_t argIndx)
 {
-    if (type.isNull()) return llvm::None;
+    if (type.isNull()) return std::nullopt;
     
     auto tmplArg = getTemplateArg(type, argIndx);
     if (tmplArg && tmplArg->getKind() == TemplateArgument::ArgKind::Type) {
@@ -464,7 +464,7 @@ std::optional<clang::QualType> getTemplateArgAsType(clang::QualType type,
 std::optional<llvm::APSInt> getTemplateArgAsInt(clang::QualType type, 
                                                  std::size_t argIndx)
 {
-    if (type.isNull()) return llvm::None;
+    if (type.isNull()) return std::nullopt;
     
     auto tmplArg = getTemplateArg(type, argIndx);
     if (tmplArg && tmplArg->getKind() == TemplateArgument::ArgKind::Integral) {
@@ -639,7 +639,7 @@ std::optional<std::string> getNamespaceAsStr(const clang::Decl *decl)
     }
 
     if (!declCtx->isNamespace())
-        return llvm::None;
+        return std::nullopt;
 
     auto nd = llvm::cast<clang::NamespaceDecl>(declCtx);
     return std::string(nd->getName());
