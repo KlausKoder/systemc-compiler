@@ -390,7 +390,7 @@ bool isUserDefinedClassArray(QualType type, bool checkPointer)
 }
 
 // Get user defined class from array/vector or none
-llvm::Optional<QualType> getUserDefinedClassFromArray(QualType type) 
+std::optional<QualType> getUserDefinedClassFromArray(QualType type) 
 {
     if (type.isNull()) return llvm::None;
 
@@ -425,7 +425,7 @@ unsigned getTemplateArgNum(clang::QualType type)
     return 0;
 }
 
-llvm::Optional<TemplateArgument> getTemplateArg(clang::QualType type, 
+std::optional<TemplateArgument> getTemplateArg(clang::QualType type, 
                                                 std::size_t argIndx)
 {
     if (type.isNull()) return llvm::None;
@@ -445,10 +445,10 @@ llvm::Optional<TemplateArgument> getTemplateArg(clang::QualType type,
             }
         }
     }
-    return llvm::Optional<TemplateArgument>();
+    return std::optional<TemplateArgument>();
 }
 
-llvm::Optional<clang::QualType> getTemplateArgAsType(clang::QualType type, 
+std::optional<clang::QualType> getTemplateArgAsType(clang::QualType type, 
                                                      std::size_t argIndx)
 {
     if (type.isNull()) return llvm::None;
@@ -458,10 +458,10 @@ llvm::Optional<clang::QualType> getTemplateArgAsType(clang::QualType type,
         return tmplArg->getAsType();
     }
    
-    return llvm::Optional<clang::QualType>();
+    return std::optional<clang::QualType>();
 }
 
-llvm::Optional<llvm::APSInt> getTemplateArgAsInt(clang::QualType type, 
+std::optional<llvm::APSInt> getTemplateArgAsInt(clang::QualType type, 
                                                  std::size_t argIndx)
 {
     if (type.isNull()) return llvm::None;
@@ -471,7 +471,7 @@ llvm::Optional<llvm::APSInt> getTemplateArgAsInt(clang::QualType type,
         return tmplArg->getAsIntegral();
     }
     
-    return llvm::Optional<llvm::APSInt>();
+    return std::optional<llvm::APSInt>();
 }
 
 // Cast integer to the given type width and sign
@@ -630,7 +630,7 @@ CXXConstructExpr* getCXXCtorExprArg(Expr* expr)
     return dyn_cast<CXXConstructExpr>(expr);
 }
 
-llvm::Optional<std::string> getNamespaceAsStr(const clang::Decl *decl)
+std::optional<std::string> getNamespaceAsStr(const clang::Decl *decl)
 {
     const auto *declCtx = decl->getDeclContext();
 

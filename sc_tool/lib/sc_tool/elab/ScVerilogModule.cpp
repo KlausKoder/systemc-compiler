@@ -765,7 +765,7 @@ VerilogModStatistic VerilogModule::getStatistic() const {
 }
 
 // Translate SystemC assertion string into SVA string
-/*llvm::Optional<std::string> VerilogModule::transSvaString(
+/*std::optional<std::string> VerilogModule::transSvaString(
                                         const std::string& origStr) const
 {
     using namespace sc;
@@ -813,7 +813,7 @@ VerilogModStatistic VerilogModule::getStatistic() const {
 
 // Check SVA argument does not have changed names, and do some modifications:
 // remove spaces and extra symbols like "this->" and "read()"
-llvm::Optional<std::string> VerilogModule::parseSvaArg(
+std::optional<std::string> VerilogModule::parseSvaArg(
                                             const std::string& origStr) const 
 {
     using namespace sc;
@@ -1605,7 +1605,7 @@ bool VerilogModule::isEquivalentTo(VerilogModule &otherMod) const
     return true;
 }
 
-llvm::Optional<std::string> VerilogModule::getModularIfName(ProcessView procObj) const
+std::optional<std::string> VerilogModule::getModularIfName(ProcessView procObj) const
 {
     using namespace sc;
     using std::cout; using std::endl;
@@ -1631,7 +1631,7 @@ llvm::Optional<std::string> VerilogModule::getModularIfName(ProcessView procObj)
             return decl->getNameAsString();
         }
     }
-    return llvm::Optional<std::string>();
+    return std::optional<std::string>();
 }
 
 // Get process name unique in the module

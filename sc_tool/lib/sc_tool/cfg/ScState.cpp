@@ -1005,7 +1005,7 @@ const std::pair<std::string, std::string>&  ScState::getWaitNVarName() const
     return staticState->waitNVarName;
 }
 
-llvm::Optional<sc_elab::ObjectView> ScState::getElabObject(const SValue &sval) const
+std::optional<sc_elab::ObjectView> ScState::getElabObject(const SValue &sval) const
 {
     auto searchRes = staticState->sVal2ElabMap.find(sval);
     if (searchRes != staticState->sVal2ElabMap.end()) {

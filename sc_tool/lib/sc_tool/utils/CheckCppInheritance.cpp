@@ -132,7 +132,7 @@ SValue getBaseClass(const SValue& tval, QualType baseType)
 
 // Get parent class where variable @val is declared
 // \param val -- variable value
-llvm::Optional<QualType> getParentClass(const SValue& val)
+std::optional<QualType> getParentClass(const SValue& val)
 {
     SCT_TOOL_ASSERT (val.isVariable(), "Value is not variable");
     

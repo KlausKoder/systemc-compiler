@@ -88,7 +88,7 @@ Object *ObjectMap::findElabObj(TypedObject to)
     return nullptr;
 }
 
-llvm::Optional<TypedObject> ObjectMap::findTypedObj(const Object *eo) const
+std::optional<TypedObject> ObjectMap::findTypedObj(const Object *eo) const
 {
     auto iter = elab2RflMap.find(eo);
 
@@ -124,7 +124,7 @@ static bool typesMatch(TypedObject ptr, TypedObject target) {
     return false;
 }
 
-llvm::Optional<std::pair<Object *, size_t>>
+std::optional<std::pair<Object *, size_t>>
 ObjectMap::resolvePointer(PtrOrRefObject ptrObj)
 {
 
@@ -721,7 +721,7 @@ PtrOrRefObject DesignDbGenerator::getPortBindPtr(TypedObject portTO) const
     return *TypedObject(parentPtr, parentPtrType).getAs<PtrOrRefObject>();
 }
 
-llvm::Optional<PtrOrRefObject>
+std::optional<PtrOrRefObject>
 DesignDbGenerator::getAsPtrOrRefTO(const sc_elab::Object &eo) const
 {
     if (eo.has_primitive()) {

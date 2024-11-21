@@ -3093,7 +3093,7 @@ void ScParseExprValue::parseOperatorCall(CXXOperatorCallExpr* expr, SValue& tval
                     //cout << "val1 " << sc::APSintToString(val1, 16) << " val2 " << sc::APSintToString(val2, 16) << endl;
                 }
             
-                llvm::Optional<APSInt> res;
+                std::optional<APSInt> res;
                 if (opcode == OO_Plus) {
                     res = val1 + val2;
                 } else 

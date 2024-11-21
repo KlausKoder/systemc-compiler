@@ -507,7 +507,7 @@ clang::QualType getTypeForWidth(const clang::Expr* expr)
 
 // Get width of any integral type including SC data types
 // \return < width, isUnsigned >
-llvm::Optional<std::pair<size_t, bool>> getIntTraits(clang::QualType type, 
+std::optional<std::pair<size_t, bool>> getIntTraits(clang::QualType type, 
                                                      bool checkPointer)
 {
     if (type.isNull()) return llvm::None;
@@ -551,7 +551,7 @@ llvm::Optional<std::pair<size_t, bool>> getIntTraits(clang::QualType type,
 
 // Get width of any integer type wrapped into given @type, based on @getIntTraits
 // Can work for any integral type, integral pointer, channel, pointer to channel
-llvm::Optional<size_t> getAnyTypeWidth(clang::QualType type, bool checkPointer, 
+std::optional<size_t> getAnyTypeWidth(clang::QualType type, bool checkPointer, 
                                        bool checkChannel)
 {
     if (type.isNull()) return llvm::None;
@@ -889,7 +889,7 @@ bool isScChannelArray(clang::QualType type, bool checkPointer)
 }
 
 // Get record type if it is SC channel of record type, or none
-llvm::Optional<clang::QualType>  
+std::optional<clang::QualType>  
 isUserClassChannel(clang::QualType type, bool checkPointer)
 {
     if (type.isNull()) return llvm::None;

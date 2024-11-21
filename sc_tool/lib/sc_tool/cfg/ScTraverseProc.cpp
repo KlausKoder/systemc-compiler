@@ -65,7 +65,7 @@ shared_ptr<CodeScope> ScTraverseProc::getScopeForBlock(AdjBlock block, unsigned 
 }
 
 // Generate temporal assertion inside of loop(s) if required
-llvm::Optional<std::string> 
+std::optional<std::string> 
 ScTraverseProc::getSvaInLoopStr(const std::string& svaStr, bool isResetSection) 
 {
     std::string tabStr = "        ";
@@ -2050,7 +2050,7 @@ void ScTraverseProc::run(const ScProcContext& cntxStack)
 }
 
 // Run for SVA property declaration, result string returned in success
-llvm::Optional<std::string> ScTraverseProc::runSvaDecl(const FieldDecl* fdecl) 
+std::optional<std::string> ScTraverseProc::runSvaDecl(const FieldDecl* fdecl) 
 {
     codeWriter->startStmt();
     const Stmt* stmt = parseSvaDecl(fdecl);

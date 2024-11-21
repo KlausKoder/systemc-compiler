@@ -24,8 +24,8 @@
 #include "sc_tool/utils/NameGenerator.h"
 
 #include "llvm/ADT/StringRef.h"
-#include "llvm/ADT/Optional.h"
 #include "llvm/ADT/APSInt.h"
+#include <optional>
 #include <iostream>
 #include <vector>
 #include <deque>
@@ -596,7 +596,7 @@ public:
         return (bool)verilogIntrinsic;
     }
 
-    llvm::Optional<std::string> getVerilogIntrinsic() const
+    std::optional<std::string> getVerilogIntrinsic() const
     {
         return verilogIntrinsic;
     }
@@ -663,7 +663,7 @@ public:
 public:
     /// If @procObj executed in module IF get modular IF instance name if possible
     /// It is possible for topmost class if it directly inherited @sc_interface
-    llvm::Optional<std::string> getModularIfName(ProcessView procObj) const;
+    std::optional<std::string> getModularIfName(ProcessView procObj) const;
     /// Get process name unique in the module
     std::string getProcName(ProcessView procObj) const;
 
@@ -671,13 +671,13 @@ public:
     void serializeProcess(llvm::raw_ostream &os, ProcessView procObj) const;
     
     /// Check SVA argument does not have changed names and trim spaces
-    llvm::Optional<std::string> parseSvaArg(const std::string& origStr) const;
+    std::optional<std::string> parseSvaArg(const std::string& origStr) const;
     
     /// Check for SVA property instances have @clk port connected
     //void checkSvaClkBound() const;
 
     /// Translate SystemC assertion string into SVA string
-    //llvm::Optional<std::string> transSvaString(const std::string& origStr) const;
+    //std::optional<std::string> transSvaString(const std::string& origStr) const;
     
     /// Generate always block for method process and for thread process in 
     /// non-split mode 
@@ -767,7 +767,7 @@ public:
     /// <parent, variable>
     std::unordered_map<RecordMemberNameKey, VerilogVar*> memberMIFArrayVars;
 
-    llvm::Optional<std::string> verilogIntrinsic;
+    std::optional<std::string> verilogIntrinsic;
     
     /// Field declarations for SVA properties
     std::vector<const clang::FieldDecl*> svaProperties;

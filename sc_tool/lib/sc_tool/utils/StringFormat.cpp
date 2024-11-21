@@ -65,12 +65,12 @@ std::string getTail(const std::string& source, const std::size_t length)
 }
 
 
-llvm::Optional<std::vector<std::string>> splitString(const std::string& str) 
+std::optional<std::vector<std::string>> splitString(const std::string& str) 
 {
     size_t pos = 0;
     auto i = str.find("\n", pos);
     if (i == std::string::npos) 
-        return llvm::Optional<std::vector<std::string>>();
+        return std::optional<std::vector<std::string>>();
     
     std::vector<std::string> res;
       
@@ -205,7 +205,7 @@ std::string parseSvaTime(int lotime, int hitime, unsigned stable)
 }
 
 /*
- llvm::Optional<std::string> parseSvaTime(const std::string& origStr) 
+ std::optional<std::string> parseSvaTime(const std::string& origStr) 
 {
     using namespace sc;
     

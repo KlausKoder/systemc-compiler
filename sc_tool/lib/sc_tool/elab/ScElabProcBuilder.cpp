@@ -216,7 +216,7 @@ sc::SValue ProcBuilder::traverseRecord(RecordView recView, bool isVerModule)
     // try to find pointees if they were created during record traversal
     for (auto unresolvedPtr : unresolvedPointers) {
         //cout << "unresolvedPtr " << unresolvedPtr.getDebugString() << endl;
-        llvm::Optional<ObjectView> pointee = unresolvedPtr.pointeeOrArray();
+        std::optional<ObjectView> pointee = unresolvedPtr.pointeeOrArray();
 
         if (pointee) {
             //cout << "pointee " << pointee->getDebugString() << endl;
@@ -609,7 +609,7 @@ sc::SValue ProcBuilder::getOrCreatePointeeSValue(PtrOrRefView ptrOrRefView)
     }
 
     // Get pointer value
-    llvm::Optional<ObjectView> pointee = ptrOrRefView.pointeeOrArray();
+    std::optional<ObjectView> pointee = ptrOrRefView.pointeeOrArray();
 
     if (pointee) {
         if (objSValMap.count(*pointee))

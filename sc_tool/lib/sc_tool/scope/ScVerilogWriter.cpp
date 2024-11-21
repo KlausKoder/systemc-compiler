@@ -684,11 +684,11 @@ string ScVerilogWriter::addLeadMinus(const string& s)
 }
  
 // Extract signed or unsigned value from given literal string 
-std::pair<llvm::Optional<uint64_t>, llvm::Optional<int64_t>> 
+std::pair<std::optional<uint64_t>, std::optional<int64_t>> 
 ScVerilogWriter::getLiteralVal(const std::string& literStr)
 {
-    std::pair<llvm::Optional<uint64_t>, 
-              llvm::Optional<int64_t>> res(llvm::None, llvm::None);
+    std::pair<std::optional<uint64_t>, 
+              std::optional<int64_t>> res(llvm::None, llvm::None);
     
     APSInt val(literStr);
     // Do not call @getZExtValue/getExtValue() for value more than 64bits
@@ -3232,10 +3232,10 @@ void ScVerilogWriter::clearStmt(const Stmt* stmt) {
 
 // Get string for @stmt, which may be sub-expression
 // \return expression string to read
-llvm::Optional<string> ScVerilogWriter::getStmtString(const Stmt* stmt) 
+std::optional<string> ScVerilogWriter::getStmtString(const Stmt* stmt) 
 {
-    return (terms.count(stmt)) ? llvm::Optional<string>(terms.at(stmt).str.first) : 
-                                 llvm::Optional<string>();
+    return (terms.count(stmt)) ? std::optional<string>(terms.at(stmt).str.first) : 
+                                 std::optional<string>();
 }
 
 // Get string for IF statement

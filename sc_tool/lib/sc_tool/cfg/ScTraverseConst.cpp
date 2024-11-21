@@ -186,7 +186,7 @@ void ScTraverseConst::evaluateTermCond(Stmt* stmt, SValue& val)
 }
 
 // Evaluate literal or constant expression as non-negative integer
-llvm::Optional<unsigned> ScTraverseConst::evaluateConstExpr(Expr* expr) 
+std::optional<unsigned> ScTraverseConst::evaluateConstExpr(Expr* expr) 
 {
     SValue rval;
     if (auto intLiter = dyn_cast<IntegerLiteral>(expr)) {
@@ -203,7 +203,7 @@ llvm::Optional<unsigned> ScTraverseConst::evaluateConstExpr(Expr* expr)
 } 
 
 // Evaluate loop iteration number from conditional expression
-llvm::Optional<unsigned> ScTraverseConst::evaluateIterNumber(const Stmt* stmt) 
+std::optional<unsigned> ScTraverseConst::evaluateIterNumber(const Stmt* stmt) 
 { 
     auto cond = getTermCond(stmt);
     if (cond) {

@@ -243,7 +243,7 @@ bool ScGenerateExpr::isSctAssert(const Stmt* stmt) const
 }
 
 // Get string from char* argument
-llvm::Optional<std::string> 
+std::optional<std::string> 
 ScGenerateExpr::getStringFromArg(Expr* argExpr) {
     
     Expr* expr = argExpr;
@@ -3765,7 +3765,7 @@ void ScGenerateExpr::chooseExprMethod(Stmt *stmt, SValue &val)
 
 // ----------------------------------------------------------------------------
 // Parse general statement 
-llvm::Optional<string> ScGenerateExpr::parse(const Stmt* stmt)
+std::optional<string> ScGenerateExpr::parse(const Stmt* stmt)
 {
     codeWriter->startStmt();
     // Clear indices after previous statement
@@ -3781,7 +3781,7 @@ llvm::Optional<string> ScGenerateExpr::parse(const Stmt* stmt)
 }
 
 // Parse block terminator statement 
-llvm::Optional<string> ScGenerateExpr::parseTerm(const Stmt* stmt, 
+std::optional<string> ScGenerateExpr::parseTerm(const Stmt* stmt, 
                                                  const SValue& termCond, 
                                                  bool artifIf)
 {
@@ -3936,7 +3936,7 @@ llvm::Optional<string> ScGenerateExpr::parseTerm(const Stmt* stmt,
         SCT_INTERNAL_FATAL(stmt->getBeginLoc(), string("Unsupported terminator ")+
                          stmt->getStmtClassName());
         
-        return llvm::Optional<string>();
+        return std::optional<string>();
     }    
 }
 

@@ -66,7 +66,7 @@ public:
     void run(const clang::FunctionDecl* fdecl, unsigned level);
     
     /// Get statement level
-    inline llvm::Optional<unsigned> getLevel(clang::Stmt* stmt) const {
+    inline std::optional<unsigned> getLevel(clang::Stmt* stmt) const {
         auto i = levels.find(stmt);
         if (i != levels.end()) {
             return i->second;
@@ -83,7 +83,7 @@ public:
         return (switchBreaks.count(stmt) != 0);
     }
     
-    inline llvm::Optional<unsigned> 
+    inline std::optional<unsigned> 
     getSubStmtLevel(clang::Stmt* stmt) const {
         if (auto ss = ssVisitor.getSuperStmt(stmt)) {
             return getLevel(ss);
@@ -96,7 +96,7 @@ public:
         return ssVisitor.getSuperStmt(stmt);
     }
     
-    inline llvm::Optional<unsigned>
+    inline std::optional<unsigned>
     getDeclGroupLevel(clang::Stmt* stmt) const {
         using namespace clang;
         if (auto declStmt = dyn_cast<DeclStmt>(stmt)) {

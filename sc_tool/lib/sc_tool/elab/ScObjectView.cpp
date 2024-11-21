@@ -168,7 +168,7 @@ ObjectView::getParentModulesList(const ModuleMIFView &rootMod) const
     return res;
 }
 
-llvm::Optional<uint32_t> ObjectView::getElementIndex() const
+std::optional<uint32_t> ObjectView::getElementIndex() const
 {
     if (isArrayElement())
         return obj->array_idx();
@@ -380,7 +380,7 @@ PortView ObjectView::getPortBound(PortView port) const
     }
 }
 
-llvm::Optional<ObjectView> ObjectView::derefRecursively() const
+std::optional<ObjectView> ObjectView::derefRecursively() const
 {
     Optional<ObjectView> res = *this;
 
@@ -391,7 +391,7 @@ llvm::Optional<ObjectView> ObjectView::derefRecursively() const
     return res;
 }
 
-llvm::Optional<ObjectView> ObjectView::getVerilogNameOwner() const
+std::optional<ObjectView> ObjectView::getVerilogNameOwner() const
 {
     if (auto arr = array()) {
         if (arr->hasElements()) {
@@ -492,7 +492,7 @@ llvm::SmallVector<VerilogVarRef, 1> ObjectView::getVerilogVarsOffset() const
     return res;
 }
 
-llvm::Optional<PrimitiveView> ObjectView::primitive() const
+std::optional<PrimitiveView> ObjectView::primitive() const
 {
     if (isPrimitive())
         return PrimitiveView(*this);
@@ -500,7 +500,7 @@ llvm::Optional<PrimitiveView> ObjectView::primitive() const
     return llvm::None;
 }
 
-llvm::Optional<RecordView> ObjectView::record() const
+std::optional<RecordView> ObjectView::record() const
 {
     if (isRecord())
         return RecordView(*this);
@@ -508,7 +508,7 @@ llvm::Optional<RecordView> ObjectView::record() const
     return llvm::None;
 }
 
-llvm::Optional<ModuleMIFView> ObjectView::moduleMIF() const
+std::optional<ModuleMIFView> ObjectView::moduleMIF() const
 {
     if (isModule() || isModularInterface())
         return ModuleMIFView(*this);
@@ -516,7 +516,7 @@ llvm::Optional<ModuleMIFView> ObjectView::moduleMIF() const
     return llvm::None;
 }
 
-llvm::Optional<ArrayView> ObjectView::array() const
+std::optional<ArrayView> ObjectView::array() const
 {
     if (isArrayLike())
         return ArrayView(*this);
@@ -524,7 +524,7 @@ llvm::Optional<ArrayView> ObjectView::array() const
     return llvm::None;
 }
 
-llvm::Optional<SignalView> ObjectView::signal() const
+std::optional<SignalView> ObjectView::signal() const
 {
     if (isSignal())
         return SignalView(*this);
@@ -532,7 +532,7 @@ llvm::Optional<SignalView> ObjectView::signal() const
     return llvm::None;
 }
 
-llvm::Optional<std::string> ObjectView::string() const
+std::optional<std::string> ObjectView::string() const
 {
     if (isPrimitive()) {
         if (obj->primitive().kind() == Primitive::STRING) {
@@ -749,7 +749,7 @@ void ObjectView::dumpHierarchy(bool traverseSubmods) const
                  << "--------------------------------------\n";
 }
 
-llvm::Optional<ObjectView> ObjectView::getTopmostParentArray() const 
+std::optional<ObjectView> ObjectView::getTopmostParentArray() const 
 {
     using std::cout; using std::endl;
     ObjectView parent;
@@ -801,7 +801,7 @@ llvm::Optional<ObjectView> ObjectView::getTopmostParentArray() const
 }
 
 // Return topmost array or pointer variable 
-llvm::Optional<ObjectView> ObjectView::getTopmostParentArrayOrPointer() const 
+std::optional<ObjectView> ObjectView::getTopmostParentArrayOrPointer() const 
 {
     using std::cout; using std::endl;
     ObjectView parent;
@@ -892,12 +892,12 @@ std::size_t ArrayView::getOptimizedArrayBitwidth() const
     return getProtobufObj()->primitive().init_val().bitwidth();
 }
 
-llvm::Optional<ObjectView> ArrayView::getFirstNonArrayEl() const
+std::optional<ObjectView> ArrayView::getFirstNonArrayEl() const
 {
     ObjectView el = at(0);
 
-    if (llvm::Optional<PrimitiveView> prim = el.primitive()) {
-        if (llvm::Optional<PtrOrRefView> ptr = prim->ptrOrRef()) {
+    if (std::optional<PrimitiveView> prim = el.primitive()) {
+        if (std::optional<PtrOrRefView> ptr = prim->ptrOrRef()) {
             if (auto pointee = ptr->getFirstNonPointerPointee()) {
                 el = *pointee;
             } else
@@ -922,8 +922,8 @@ bool ArrayView::isChannelArray() const
 
     ObjectView el = at(0);
 
-    if (llvm::Optional<PrimitiveView> prim = el.primitive()) {
-        if (llvm::Optional<PtrOrRefView> ptr = prim->ptrOrRef()) {
+    if (std::optional<PrimitiveView> prim = el.primitive()) {
+        if (std::optional<PtrOrRefView> ptr = prim->ptrOrRef()) {
             if (auto pointee = ptr->getFirstNonPointerPointee()) {
                 el = *pointee;
             } else
@@ -974,7 +974,7 @@ RecordView::RecordView(const ObjectView &parent)
     SCT_TOOL_ASSERT (isRecord(), "");
 }
 
-llvm::Optional<ObjectView> RecordView::getField(const clang::FieldDecl *fieldDecl) const
+std::optional<ObjectView> RecordView::getField(const clang::FieldDecl *fieldDecl) const
 {
     for (auto fieldView : getFields()) {
         if (fieldDecl->getName().equals(*fieldView.getFieldName()))
@@ -984,7 +984,7 @@ llvm::Optional<ObjectView> RecordView::getField(const clang::FieldDecl *fieldDec
     return llvm::None;
 }
 
-llvm::Optional<ObjectView> RecordView::getField(const std::string fieldName) const
+std::optional<ObjectView> RecordView::getField(const std::string fieldName) const
 {
     for (auto fieldView : getFields()) {
         if (*fieldView.getFieldName() == fieldName)
@@ -994,7 +994,7 @@ llvm::Optional<ObjectView> RecordView::getField(const std::string fieldName) con
     return llvm::None;
 }
 
-llvm::Optional<ObjectView> RecordView::getBase(clang::QualType baseType) const
+std::optional<ObjectView> RecordView::getBase(clang::QualType baseType) const
 {
     for (auto baseView : getBases()) {
         if (baseView.getType() == baseType)
@@ -1154,7 +1154,7 @@ PrimitiveView::PrimitiveView(const ObjectView &parent)
     SCT_TOOL_ASSERT (isPrimitive(), "");
 }
 
-llvm::Optional<ValueView> PrimitiveView::value() const
+std::optional<ValueView> PrimitiveView::value() const
 {
     if (isValue())
         return ValueView(*this);
@@ -1162,7 +1162,7 @@ llvm::Optional<ValueView> PrimitiveView::value() const
     return llvm::None;
 }
 
-llvm::Optional<PtrOrRefView> PrimitiveView::ptrOrRef() const
+std::optional<PtrOrRefView> PrimitiveView::ptrOrRef() const
 {
     if (isPointer() || isReference())
         return PtrOrRefView(*this);
@@ -1170,7 +1170,7 @@ llvm::Optional<PtrOrRefView> PrimitiveView::ptrOrRef() const
     return llvm::None;
 }
 
-llvm::Optional<PortView> PrimitiveView::port() const
+std::optional<PortView> PrimitiveView::port() const
 {
     if (isPort())
         return PortView(*this);
@@ -1178,7 +1178,7 @@ llvm::Optional<PortView> PrimitiveView::port() const
     return llvm::None;
 }
 
-llvm::Optional<ProcessView> PrimitiveView::process() const
+std::optional<ProcessView> PrimitiveView::process() const
 {
     if (isProcess())
         return ProcessView(*this);
@@ -1203,7 +1203,7 @@ bool ValueView::isDynamicBitwidth() const
     return getProtobufObj()->primitive().init_val().dyn_bitwidth();
 }
 
-llvm::Optional<int64_t> ValueView::int64Val() const
+std::optional<int64_t> ValueView::int64Val() const
 {
     if (getProtobufObj()->primitive().init_val().has_int64_value())
         return getProtobufObj()->primitive().init_val().int64_value();
@@ -1211,7 +1211,7 @@ llvm::Optional<int64_t> ValueView::int64Val() const
     return llvm::None;
 }
 
-llvm::Optional<uint64_t> ValueView::uint64Val() const
+std::optional<uint64_t> ValueView::uint64Val() const
 {
     if (getProtobufObj()->primitive().init_val().has_uint64_value())
         return getProtobufObj()->primitive().init_val().uint64_value();
@@ -1219,7 +1219,7 @@ llvm::Optional<uint64_t> ValueView::uint64Val() const
     return llvm::None;
 }
 
-llvm::Optional<double> ValueView::doubleVal() const
+std::optional<double> ValueView::doubleVal() const
 {
     if (getProtobufObj()->primitive().init_val().has_double_val())
         return getProtobufObj()->primitive().init_val().double_val();
@@ -1250,7 +1250,7 @@ bool PtrOrRefView::isBaseOffsetPtr() const
     return getProtobufObj()->primitive().ptr_val().pointee_id_size() == 2;
 }
 
-llvm::Optional<ObjectView> PtrOrRefView::pointee() const
+std::optional<ObjectView> PtrOrRefView::pointee() const
 {
     if (getProtobufObj()->primitive().ptr_val().pointee_id().size() == 1)
         return getDatabase()->getObj(getProtobufObj()->primitive().ptr_val().pointee_id(0));
@@ -1258,7 +1258,7 @@ llvm::Optional<ObjectView> PtrOrRefView::pointee() const
     return llvm::None;
 }
 
-llvm::Optional<ObjectView> PtrOrRefView::pointeeOrArray() const
+std::optional<ObjectView> PtrOrRefView::pointeeOrArray() const
 {
     auto &pointee_ids = getProtobufObj()->primitive().ptr_val().pointee_id();
 
@@ -1283,14 +1283,14 @@ llvm::Optional<ObjectView> PtrOrRefView::pointeeOrArray() const
     }
 }
 
-llvm::Optional<uint32_t> PtrOrRefView::getPointeeID() const
+std::optional<uint32_t> PtrOrRefView::getPointeeID() const
 {
     if (getProtobufObj()->primitive().ptr_val().pointee_id_size() > 0)
         return getProtobufObj()->primitive().ptr_val().pointee_id(0);
     return llvm::None;
 }
 
-llvm::Optional<uint32_t> PtrOrRefView::getOffset() const
+std::optional<uint32_t> PtrOrRefView::getOffset() const
 {
     SCT_TOOL_ASSERT (isBaseOffsetPtr(), "");
 
@@ -1300,12 +1300,12 @@ llvm::Optional<uint32_t> PtrOrRefView::getOffset() const
     return llvm::None;
 }
 
-llvm::Optional<ObjectView> PtrOrRefView::getFirstNonPointerPointee() const {
+std::optional<ObjectView> PtrOrRefView::getFirstNonPointerPointee() const {
 
     if (isBaseOffsetPtr())
         return pointeeOrArray();
 
-    if(llvm::Optional<ObjectView> pointeeObj = pointee()) {
+    if(std::optional<ObjectView> pointeeObj = pointee()) {
         if (auto prim = pointeeObj->primitive()) {
             if (prim->isPointer())
                 return prim->ptrOrRef()->getFirstNonPointerPointee();
@@ -1370,7 +1370,7 @@ PortDirection PortView::getDirection() const
     return dir;
 }
 
-llvm::Optional<ObjectView> PortView::pointee() const
+std::optional<ObjectView> PortView::pointee() const
 {
     if (getProtobufObj()->primitive().ptr_val().pointee_id().size() == 1)
         return getDatabase()->getObj(getProtobufObj()->primitive().ptr_val().pointee_id(0));
@@ -1441,7 +1441,7 @@ std::vector<ProcessView::Reset> ProcessView::resets() const
 }
 
 
-static llvm::Optional<RecordView> findBaseClassByType(RecordView recView,
+static std::optional<RecordView> findBaseClassByType(RecordView recView,
                                       clang::QualType baseType) {
 
     if (recView.getType() == baseType)

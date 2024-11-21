@@ -1196,7 +1196,7 @@ void ThreadBuilder::generateThreadLocalVariables()
                         globalState->putVerilogTraits(vval,
                             VerilogVarTraits(VerilogVarTraits::COMBSIGCLEAR, 
                             accessPlace, true, isNonZeroElmt, false,
-                            verVar->getName(), llvm::Optional<std::string>(""),
+                            verVar->getName(), std::optional<std::string>(""),
                             mifElemSuffix));
                         
                         vval = isRecordChan ? 
@@ -1204,7 +1204,7 @@ void ThreadBuilder::generateThreadLocalVariables()
                         globalState->putVerilogTraits(vval,
                             VerilogVarTraits(VerilogVarTraits::COMBSIGCLEAR, 
                             accessPlace, true, !isNonZeroElmt, false,
-                            verVar->getName(), llvm::Optional<std::string>(""),
+                            verVar->getName(), std::optional<std::string>(""),
                             mifElemSuffix));
                     }
                 } else {

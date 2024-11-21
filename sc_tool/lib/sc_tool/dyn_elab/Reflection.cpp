@@ -233,7 +233,7 @@ RecordObject::findField(llvm::StringRef fieldName) const
     return llvm::None;
 }
 
-llvm::Optional<RecordObject::BaseClassObject>
+std::optional<RecordObject::BaseClassObject>
 RecordObject::findBase(llvm::StringRef baseName) const {
     for (auto base : bases()) {
         //llvm::outs() << "found_base " << base.itemDecl.getType()->getAsCXXRecordDecl()->getName() << "\n";
@@ -401,7 +401,7 @@ llvm::APSInt IntegerObject::getAPSInt() const
 
 // class ArrayObject  ----------------------------------------------------------
 
-llvm::Optional<ArrayObject::KIND>
+std::optional<ArrayObject::KIND>
 ArrayObject::getArrayObjectKind(clang::QualType canonicalType)
 {
     if (canonicalType->isConstantArrayType()) {
