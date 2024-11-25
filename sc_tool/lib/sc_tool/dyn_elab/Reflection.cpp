@@ -90,8 +90,8 @@ void RecordObject::dump() const
 
     llvm::outs() << this->typedObj << "\n";
 
-    std::vector<int> ivec;
-    ivec.data();
+    //std::vector<int> ivec;
+    //ivec.data();
 }
 
 void RecordObject::dumpDynamicType() const
