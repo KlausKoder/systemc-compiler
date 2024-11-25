@@ -30,8 +30,6 @@ target_link_libraries(SysCRTTI
         PUBLIC
         SVC::systemc
         PRIVATE
-        LLVMCore
-        LLVMSupport
         )
 
 target_include_directories(SysCRTTI PUBLIC
@@ -146,32 +144,17 @@ add_library(SCTool
 
         )
 
+
 target_link_libraries(SCTool
         PUBLIC
         sc_elab_proto
         SysCRTTI
         PRIVATE
-        LLVMX86AsmParser
-        LLVMX86Desc
-        LLVMX86Info
-        LLVMipo
-        LLVMScalarOpts
-        LLVMInstCombine
-        LLVMTransformUtils
-        LLVMAnalysis
-        LLVMTarget
-        LLVMOption
-        LLVMMCParser
-        LLVMMC
-        LLVMObject
-        LLVMBitReader
-        LLVMCore
-        LLVMSupport
-        LLVMFrontendOpenMP
-        LLVMWindowsDriver
         clang-cpp
+        LLVM
         ${system_libs}
         )
+
 
 # Include $ICSC_HOME/include, create INTERFACE_INCLUDE_DIRECTORIES
 target_include_directories(SCTool PUBLIC

@@ -88,7 +88,12 @@ sc_tool/arc
 
 build/
 build_*/
+<<<<<<< HEAD
 **/CMakeFiles/
 **/AN.DB/
 **/verif/simv*
 **/verif/csrc/
+=======
+
+**/CMakeFiles/
+>>>>>>> f27df4a (Remove duplicate libs)
