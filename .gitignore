@@ -84,3 +84,4 @@ sc_tool/arc
 build/
 build_*/
 
+**/CMakeFiles/
