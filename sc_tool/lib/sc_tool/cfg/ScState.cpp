@@ -2091,10 +2091,11 @@ llvm::APSInt ScState::getIntFromView(bool isSigned, sc_elab::ValueView valueView
     
     if (valueView.int64Val()) {
         return llvm::APSInt(llvm::APInt(bitwidth,*valueView.int64Val()), !isSigned);
-    } else 
-    if (valueView.uint64Val()) {
+    } else if (valueView.uint64Val()) {
         return llvm::APSInt(llvm::APInt(bitwidth,*valueView.uint64Val()), !isSigned);
     }
+    assert(false);
+    return llvm::APSInt::get(0);
 }
 
 bool ScState::isMemberPrimVar(const SValue& val, const ScState* state) 
