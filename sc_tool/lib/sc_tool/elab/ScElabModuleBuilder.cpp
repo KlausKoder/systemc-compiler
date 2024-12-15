@@ -816,6 +816,7 @@ ScElabModuleBuilder::FlattenReq ScElabModuleBuilder::generateVariable(
                 if (auto typeInfo = getIntTraits(type)) {
                     bitwidth = typeInfo->first;
                 } else {
+                    bitwidth = 0;
                     ScDiag::reportScDiag(objView.getFieldDecl()->getBeginLoc(), 
                                          ScDiag::SYNTH_STATIC_ARR_TYPE);
                 }
@@ -1192,9 +1193,17 @@ void ScElabModuleBuilder::bindPortUpAux(PortView portEl,
                 hostVars.push_back(portVar);
             }
         } else {
-            hostVars = hostVerMod->getVerVariables(bindedObj.obj);
+            VerilogVarsVec hostVars = hostVerMod->getVerVariables(bindedObj.obj);
             if (!isUniformArrayBind)
                 bindedIndexes = bindedObj.indices;
+
+            if (!boundDynamicSig) {
+                for (size_t j = 0; j < hostVars.size(); ++j) {
+                    instance->addBinding(instanceVars[j], {hostVars[j], bindedIndexes});
+                    hostVerMod->addVarBindedInMod(hostVars[j]);
+                }
+            }
+            return;
         }
         
         SCT_TOOL_ASSERT (hostVars.size() == instanceVars.size(), "");
@@ -1552,13 +1561,13 @@ void ScElabModuleBuilder::bindPortCrossAux(PortView portEl,
 
             // in bottom module create assignments to virtual ports
 
-            IndexVec indexes;
-            if (!isUniformArrayBind) {
-                indexes = bindedObj.indices;
-            }
-
             // Add assignment of signal port and auxiliary variable in signal module
             if (!keepSigVar && last) {
+                IndexVec indexes;
+                if (!isUniformArrayBind) {
+                    indexes = bindedObj.indices;
+                }
+
                 VerilogVarsVec bindedVerVars = instVerMod->getVerVariables(
                                                bindedObj.obj);
                 SCT_TOOL_ASSERT (bindedVerVars.size() == instanceVars.size(), "");
